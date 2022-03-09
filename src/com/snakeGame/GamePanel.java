@@ -17,7 +17,6 @@ public class GamePanel extends JPanel  {
     public void paintComponent(Graphics g){
         Graphics2D g2D = (Graphics2D) g;
         g2D.setColor(Color.black);
-        g2D.drawLine(0,0,300,300);
         g2D.fillRect(100,100,40,40);
 
 
