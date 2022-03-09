@@ -4,12 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel  {
+JButton b1 , b2;
 
     GamePanel(){
 
-        this.setSize(new Dimension(400,600));
+        b1 = new JButton("this");
+        b2 = new JButton("this2");
+        this.setPreferredSize(new Dimension(400,600));
         this.setBackground(Color.black);
-        
+
+        this.add(b1);
+        this.add(b2);
 
     }
 
@@ -19,10 +24,5 @@ public class GamePanel extends JPanel  {
         g2D.setColor(Color.black);
         g2D.fillRect(100,100,40,40);
 
-
-
     }
-
-
-
 }

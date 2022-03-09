@@ -1,27 +1,27 @@
 package com.snakeGame;
+
 import javax.swing.*;
+import java.awt.*;
 
 
 public class GameFrame extends JFrame {
-    JFrame gameFrame;
+
     GamePanel panel;
-    JPanel  panel2;
+    JPanel panel2;
 
 
-    GameFrame(){
+    GameFrame() {
         panel = new GamePanel();
         panel2 = new MyPanel();
-        gameFrame = new JFrame();
-        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gameFrame.setSize(600,600);
-        //gameFrame.getContentPane().setBackground(Color.BLACK);
-        gameFrame.setLayout(null);
-        gameFrame.add(panel);
-        gameFrame.add(panel2);
-        gameFrame.setLocationRelativeTo(null);
-        gameFrame.setVisible(true);
 
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.getContentPane().setBackground(Color.BLACK);
+        this.add(panel2);
+        this.add(panel);
 
+        this.setLocationRelativeTo(null);
+        this.pack();
+        this.setVisible(true);
 
 
     }
