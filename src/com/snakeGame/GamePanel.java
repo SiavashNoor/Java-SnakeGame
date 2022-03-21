@@ -24,5 +24,6 @@ JButton b1 , b2;
         g2D.setColor(Color.black);
         g2D.fillRect(100,100,40,40);
 
+
     }
 }

@@ -7,7 +7,7 @@ import java.awt.*;
 public class MyPanel extends JPanel {
 
     MyPanel(){
-        this.setSize(200,200);
+        this.setPreferredSize(new Dimension(200,200));
         this.setBackground(Color.cyan);
     }
 }
