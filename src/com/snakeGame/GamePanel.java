@@ -2,28 +2,46 @@ package com.snakeGame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
-public class GamePanel extends JPanel  {
-JButton b1 , b2;
+public class GamePanel extends JPanel {
+    int gameWidth;
+    int gameHeight;
+    Rectangle2D.Double rec;
 
-    GamePanel(){
+    GamePanel(int gameWidth, int gameHeight) {
+        this.gameWidth = gameWidth;
+        this.gameHeight = gameHeight;
 
-        b1 = new JButton("this");
-        b2 = new JButton("this2");
-        this.setPreferredSize(new Dimension(400,600));
-        this.setBackground(Color.black);
-
-        this.add(b1);
-        this.add(b2);
+        this.setPreferredSize(new Dimension(gameWidth, gameHeight));
+        this.setBounds(0, 0, gameWidth, gameHeight);
+        this.setOpaque(false);
 
     }
 
     @Override
-    public void paintComponent(Graphics g){
-        Graphics2D g2D = (Graphics2D) g;
-        g2D.setColor(Color.black);
-        g2D.fillRect(100,100,40,40);
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
 
+        g2d.setColor(Color.blue);
+        for (int i = 0; i < 6; i++) {
+            rec = new Rectangle2D.Double(i * 100, i * 100, 100, 100);
+            g2d.fill(rec);
+
+        }
+    }
+
+
+
+    public void paintGameBoard(char[][] gameBoard, Graphics g){
+        Graphics2D g2d = (Graphics2D) g;
+        for (char[] row : gameBoard){
+            for(char pixel : row){
+               switch (pixel){
+                   case '.' -> g2d.setColor(Color.black);
+               }
+            }
+        }
 
     }
 }

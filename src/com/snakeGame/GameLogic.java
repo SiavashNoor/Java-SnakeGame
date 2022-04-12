@@ -1,5 +1,6 @@
 package com.snakeGame;
 
+import java.awt.event.KeyEvent;
 import java.util.*;
 
 enum Direction {
@@ -9,41 +10,68 @@ enum Direction {
     RIGHT
 }
 
-public class GameLogic {
+public class GameLogic implements Observer {
+
     static private final int GAME_HEIGHT = 20;
     static private final int GAME_WIDTH = 20;
-
+    ControlKeyListener controlKeyListener;
     Direction currentDirection;
-
-
+    int keyCodeValue;
     char[][] gameBoard = new char[GAME_HEIGHT][GAME_WIDTH];
-
     Random rand;
-    boolean gameValid = true;
+    boolean gameValid = false;
     boolean appleIsEaten = false;
-
     int appleXPosition;
     int appleYPosition;
     LinkedList<Integer> snakeXValues = new LinkedList<>();
     LinkedList<Integer> snakeYValues = new LinkedList<>();
-    Scanner scanner = new Scanner(System.in);
 
-    GameLogic() {
+
+    public GameLogic() {
+        controlKeyListener = new ControlKeyListener();
+        controlKeyListener.addObserver(this);
+
+
         gameStart();
+
         while (gameIsValid()) {
+
+            // System.out.println(keyCodeValue +"   this is keycode value");
             gamePlay();
         }
         gameEnd();
+        System.out.println();
     }
 
+
     void gameStart() {
-        gameValid = true;
+
         makeGamePlain();
         addApple();
         addSnake();
         paintApple();
-
         paintBoard();
+
+        while(GameFrame.keyValueInFrame == 0){
+            gameValid =false;
+            wait(50);
+        }
+        gameValid=true;
+
+
+    }
+
+    void gamePlay() {
+        getDirection();
+        makeGamePlain();
+        paintApple();
+        updateMovement();
+        appleIsEaten();
+        paintBoard();
+        wait(1000);
+    }
+
+    void gameEnd() {
     }
 
     void makeGamePlain() {
@@ -60,6 +88,7 @@ public class GameLogic {
             System.out.println();
         }
         System.out.println("---------------------------------------");
+
     }
 
     void addApple() {
@@ -83,20 +112,6 @@ public class GameLogic {
         currentDirection = Direction.RIGHT;
         for (int i = 0; i < snakeYValues.size(); i++) {
             gameBoard[snakeYValues.get(i)][snakeXValues.get(i)] = '#';
-        }
-    }
-
-    void gamePlay() {
-        while (gameIsValid()) {
-            getDirection();
-            makeGamePlain();
-            paintApple();
-            updateMovement();
-            // snakeSelfCollision();
-            appleIsEaten();
-
-            paintBoard();
-            wait(1000);
         }
     }
 
@@ -136,10 +151,6 @@ public class GameLogic {
     }
 
 
-    void gameEnd() {
-    }
-
-
     boolean gameIsValid() {
         if (snakeSelfCollision()) {
             System.out.println("you lost the game");
@@ -150,30 +161,29 @@ public class GameLogic {
 
 
     void getDirection() {
-        String controlKey;
-        controlKey = scanner.nextLine();
-        switch (controlKey.toUpperCase(Locale.ROOT)) {
-            case "W":
+        keyCodeValue = GameFrame.keyValueInFrame;
+        switch (keyCodeValue) {
+            case 38:
                 if (currentDirection != Direction.DOWN) {
                     currentDirection = Direction.UP;
                 }
                 break;
-            case "S":
+            case 40:
                 if (currentDirection != Direction.UP) {
                     currentDirection = Direction.DOWN;
                 }
                 break;
-            case "A":
+            case 37:
                 if (currentDirection != Direction.RIGHT) {
                     currentDirection = Direction.LEFT;
                 }
                 break;
-            case "D":
+            case 39:
                 if (currentDirection != Direction.LEFT) {
                     currentDirection = Direction.RIGHT;
                 }
                 break;
-            case "Q":
+            case 555:
                 System.exit(0);
             default:
                 System.out.println("not a valid command");
@@ -191,7 +201,8 @@ public class GameLogic {
     boolean snakeSelfCollision() {
         boolean collision = false;
         for (int i = 3; i < snakeXValues.size(); i++) {
-            if ((Objects.equals(snakeXValues.getFirst(), snakeXValues.get(i))) && (Objects.equals(snakeYValues.getFirst(), snakeYValues.get(i)))) {
+            if ((Objects.equals(snakeXValues.getFirst(), snakeXValues.get(i))) &&
+                    (Objects.equals(snakeYValues.getFirst(), snakeYValues.get(i)))) {
                 collision = true;
             }
         }
@@ -205,5 +216,14 @@ public class GameLogic {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void update(KeyEvent keyEvent) {
+        keyCodeValue = keyEvent.getKeyCode();
+        System.out.println(keyCodeValue + "gamelogic  ");
+    }
+
+
 }
+
 
