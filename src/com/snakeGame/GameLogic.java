@@ -1,5 +1,6 @@
 package com.snakeGame;
 
+
 import java.awt.event.KeyEvent;
 import java.util.*;
 
@@ -10,14 +11,14 @@ enum Direction {
     RIGHT
 }
 
-public class GameLogic implements Observer {
+public class GameLogic implements Observer  {
 
     static private final int GAME_HEIGHT = 20;
     static private final int GAME_WIDTH = 20;
     ControlKeyListener controlKeyListener;
     Direction currentDirection;
     int keyCodeValue;
-    char[][] gameBoard = new char[GAME_HEIGHT][GAME_WIDTH];
+    public static char[][] gameBoard = new char[GAME_HEIGHT][GAME_WIDTH];
     Random rand;
     boolean gameValid = false;
     boolean appleIsEaten = false;
@@ -30,12 +31,8 @@ public class GameLogic implements Observer {
     public GameLogic() {
         controlKeyListener = new ControlKeyListener();
         controlKeyListener.addObserver(this);
-
-
         gameStart();
-
         while (gameIsValid()) {
-
             // System.out.println(keyCodeValue +"   this is keycode value");
             gamePlay();
         }
@@ -43,22 +40,17 @@ public class GameLogic implements Observer {
         System.out.println();
     }
 
-
     void gameStart() {
-
         makeGamePlain();
         addApple();
         addSnake();
         paintApple();
         paintBoard();
-
         while(GameFrame.keyValueInFrame == 0){
             gameValid =false;
             wait(50);
         }
         gameValid=true;
-
-
     }
 
     void gamePlay() {
@@ -88,8 +80,8 @@ public class GameLogic implements Observer {
             System.out.println();
         }
         System.out.println("---------------------------------------");
-
     }
+
 
     void addApple() {
         rand = new Random();
@@ -150,7 +142,6 @@ public class GameLogic implements Observer {
         }
     }
 
-
     boolean gameIsValid() {
         if (snakeSelfCollision()) {
             System.out.println("you lost the game");
@@ -158,7 +149,6 @@ public class GameLogic implements Observer {
         }
         return gameValid;
     }
-
 
     void getDirection() {
         keyCodeValue = GameFrame.keyValueInFrame;
@@ -222,8 +212,6 @@ public class GameLogic implements Observer {
         keyCodeValue = keyEvent.getKeyCode();
         System.out.println(keyCodeValue + "gamelogic  ");
     }
-
-
 }
 
 
