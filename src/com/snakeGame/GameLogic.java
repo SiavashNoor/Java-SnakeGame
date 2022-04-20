@@ -49,6 +49,7 @@ public class GameLogic implements Observer  {
         while(GameFrame.keyValueInFrame == 0){
             gameValid =false;
             wait(50);
+
         }
         gameValid=true;
     }
@@ -61,6 +62,7 @@ public class GameLogic implements Observer  {
         appleIsEaten();
         paintBoard();
         wait(1000);
+
     }
 
     void gameEnd() {
@@ -80,6 +82,7 @@ public class GameLogic implements Observer  {
             System.out.println();
         }
         System.out.println("---------------------------------------");
+
     }
 
 
